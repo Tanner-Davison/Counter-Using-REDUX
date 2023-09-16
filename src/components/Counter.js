@@ -1,22 +1,23 @@
 import classes from "./Counter.module.css";
 import { useSelector, useDispatch } from "react-redux";
-import {useState} from 'react'
-
-
+import { useState } from "react";
+import { counterActions } from "../store";
 
 const Counter = () => {
-  const[ userInput, setUserInput] = useState("");
+	const [userInput, setUserInput] = useState("");
 
 	const dispatch = useDispatch();
 	const counter = useSelector((state) => state.counter);
-  const showCounter = useSelector((state) => state.counter.showCounter)
+	const showCounter = useSelector((state) => state.counter.showCounter);
 
-  const toggleText = showCounter ? 'Hide increase by set amount tool' : 'Use input tool';
-  console.log({show: showCounter})
+	const toggleText = showCounter
+		? "Hide input Tool"
+		: "Use input tool";
+	console.log({ show: showCounter });
 
-  const toggleCounterHandler = () => {
-    dispatch({type:'toggle'})
-  };
+	const toggleCounterHandler = () => {
+		dispatch(counterActions.showCounter());
+	};
 
 	return (
 		<main className={classes.counter}>
@@ -33,20 +34,20 @@ const Counter = () => {
 			<div className={classes.buttons}>
 				<button
 					aria-label='decrement'
-					onClick={() => dispatch({ type: "decrement" })}>
+					onClick={() => dispatch(counterActions.decrement())}>
 					-
 				</button>
 				{showCounter && (
 					<button
 						onClick={() =>
-							dispatch({ type: "increase", value: Number(userInput) })
+							dispatch(counterActions.increase(userInput))
 						}>
 						Increase by set Input Amount
 					</button>
 				)}
 				<button
 					aria-label='increment'
-					onClick={() => dispatch({ type: "increment" })}>
+					onClick={() => dispatch(counterActions.increment())}>
 					+
 				</button>
 			</div>
@@ -54,7 +55,7 @@ const Counter = () => {
 			<div className={classes.toggle}>
 				<button onClick={toggleCounterHandler}>{toggleText}</button>
 			</div>
-			<button onClick={() => dispatch({ type: "reset" })}>Reset Counter</button>
+			<button onClick={() => dispatch(counterActions.reset())}>Reset Counter</button>
 		</main>
 	);
 };
