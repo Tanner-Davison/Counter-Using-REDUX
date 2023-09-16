@@ -13,7 +13,7 @@ const Counter = () => {
 	const toggleText = showCounter
 		? "Hide input Tool"
 		: "Use input tool";
-	console.log({ show: showCounter });
+	
 
 	const toggleCounterHandler = () => {
 		dispatch(counterActions.showCounter());
